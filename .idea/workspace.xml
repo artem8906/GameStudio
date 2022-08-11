@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75d56429-6c0e-4d79-bbc5-e471cea3fd05" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/sk/tuke/gamestudio/RatingServiceTestSpring.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sk/tuke/gamestudio/ScoreServiceTestSpring.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/SpringClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/SpringClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/entity/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/entity/Rating.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/entity/Rating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/minesweeper/PlaygroundJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/minesweeper/PlaygroundJPA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/service/RatingServiceJPA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sk/tuke/gamestudio/service/RatingServiceJPA.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +29,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -49,7 +58,7 @@
       <recent name="sk.tuke.gamestudio" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SpringClient">
+  <component name="RunManager" selected="JUnit.RatingServiceTestSpring">
     <configuration name="Minesweeper" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sk.tuke.gamestudio.minesweeper.Minesweeper" />
       <module name="GameStudioTA" />
@@ -76,8 +85,40 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RatingServiceTestSpring" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GameStudioTA" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sk.tuke.gamestudio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="sk.tuke.gamestudio" />
+      <option name="MAIN_CLASS_NAME" value="sk.tuke.gamestudio.RatingServiceTestSpring" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ScoreServiceTestSpring" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GameStudioTA" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sk.tuke.gamestudio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="sk.tuke.gamestudio" />
+      <option name="MAIN_CLASS_NAME" value="sk.tuke.gamestudio.ScoreServiceTestSpring" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RatingServiceTestSpring" />
+        <item itemvalue="JUnit.ScoreServiceTestSpring" />
         <item itemvalue="Application.SpringClient" />
         <item itemvalue="Application.Minesweeper" />
       </list>

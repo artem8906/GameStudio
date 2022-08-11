@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,10 +10,13 @@ public class Comment {
     @Id
     @GeneratedValue
     private long id;
-
+    @Column (nullable = false)
     private String game;
+    @Column (nullable = false)
     private String username;
+    @Column (nullable = false)
     private String comment;
+    @Column (nullable = false)
     private Date commented_on;
 
     public Comment(String game, String username, String comment, Date commented_on) {

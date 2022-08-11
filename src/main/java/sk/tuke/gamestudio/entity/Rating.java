@@ -1,17 +1,24 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 @Entity
+@Table(uniqueConstraints =
+        {@UniqueConstraint(name = "UniqueGameAndUsername", columnNames = { "game", "username" })})
 public class Rating {
     @Id
     @GeneratedValue
     private long id;
+
+    @Column(nullable = false, length=64)
     private String game;
+
+    @Column(nullable = false, length=64)
     private String username;
+
+    @Column (columnDefinition = "INT CHECK(rate BETWEEN 1 AND 5) NOT NULL")
     private int rate;
+    @Column(nullable = false)
     private Date ratedOn;
 
     public Rating(String game, String username, int rate, Date ratedOn) {

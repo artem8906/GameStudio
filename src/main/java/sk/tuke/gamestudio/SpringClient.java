@@ -9,20 +9,35 @@ import sk.tuke.gamestudio.minesweeper.PlaygroundJPA;
 import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.service.*;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 @SpringBootApplication
 public class SpringClient {
     public static void main(String[] args) {
         SpringApplication.run(SpringClient.class);
     }
 
-    @Bean
-    public CommandLineRunner runner (ConsoleUI console) {
-        return s->console.play();
-    }
+//    @Bean
+//    public CommandLineRunner runner (ConsoleUI console) {
+//        return s->console.play();
+//    }
 
 //    @Bean
 //    public CommandLineRunner runnerJPA (PlaygroundJPA console) {
 //        return s->console.play();
+//    }
+
+
+
+//    @Bean
+//    public CommandLineRunner runnerJPA1 (PlaygroundJPA console) {
+//        return new CommandLineRunner() {
+//            @Override
+//            public void run(String... args) throws Exception {
+//                console.play();
+//            }
+//        };
 //    }
 
     @Bean
