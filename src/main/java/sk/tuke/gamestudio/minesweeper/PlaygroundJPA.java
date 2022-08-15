@@ -1,15 +1,21 @@
 package sk.tuke.gamestudio.minesweeper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.*;
 import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.service.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.security.spec.ECField;
+import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.List;
 
@@ -18,30 +24,87 @@ public class PlaygroundJPA {
 
     @PersistenceContext
     private EntityManager entityManager;
+//    @Autowired
+//    StudentService ss;
+//
+//    @Autowired
+//    StudentGroupServiceJPA sgs;
+
+    @Autowired
+    CountryService countryService;
+
+    @Autowired
+    OccupationService occupationService;
+
+    @Autowired
+    PlayerService playerService;
+
+
+    BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
+    public void fillTable(){
+
+//
+//        List<StudyGroup> studyGroups= entityManager.createQuery("select g from StudyGroup g")
+//                .getResultList();
+//
+//            System.out.println("Input your name");
+//            String name = input.readLine();
+//            System.out.println("Input your surname");
+//            String surname = input.readLine();
+//            System.out.println("Input number of group");
+//            int numberOfGroup = Integer.parseInt(input.readLine());
+//            if (name.length()>64 || surname.length()>64 || name.equals("") || surname.equals(""))
+//                throw new Exception("Incorrect input data");
+//
+//            ss.addStudent(new Student(name, surname, studyGroups.get(numberOfGroup)));
+//
+    countryService.addCountry(new Country("USA"));
+    countryService.addCountry(new Country("UK"));
+    countryService.addCountry(new Country("Slovakia"));
+    Country country1 = new Country("Austria");
+    Country country2 = new Country("Germany");
+    countryService.addCountry(country1);
+    countryService.addCountry(country2);
+
+    occupationService.addOccupation(new Occupation("ziak"));
+    Occupation occupation1 = new Occupation("student");
+    occupationService.addOccupation(occupation1);
+    occupationService.addOccupation(new Occupation("student"));
+    occupationService.addOccupation(new Occupation("zamestnanec"));
+    occupationService.addOccupation(new Occupation("zivnostnik"));
+    occupationService.addOccupation(new Occupation("nezamestnany"));
+    occupationService.addOccupation(new Occupation("dochodca"));
+    occupationService.addOccupation(new Occupation("invalid"));
+
+    playerService.addPlayer(new Player("Artem", "Peshkov", 2, country1, occupation1));
+
+    }
 
     public void play() {
         System.out.println("Opening JPA playground");
-
-
-        String game = "minesweeper";
-        String name = "Jan";
-        int rateValue = 4;
-        entityManager.persist(new Rating(game, name, 1, new Date()));
-        Rating rating = null;
-        try {
-            rating = (Rating) entityManager.createQuery("select r from Rating r where r.username=:user and r.game =:game").setParameter("user", name).setParameter("game", game)
-                    .getSingleResult();
-            rating.setRatedOn(new Date());
-            rating.setRate(rateValue);
-        }
-        catch (NoResultException e) {
-            entityManager.persist(new Rating(game, name, rateValue, new Date()));
-        }
-
-
-
+//
+//        try {
+//            createStudyGroup();
+//            inputData();
+//        }
+//        catch (Exception e) {e.getMessage();}
+//
+//        ss.output();
+//
+//
+//        System.out.println("Closed JPA playground");
+//    }
+//
+//    private void createStudyGroup() throws IOException {
+//        System.out.println("Input name of group");
+//        String nameOfGroup = input.readLine();
+//        sgs.addGroup(new StudyGroup(nameOfGroup));
+//
+//    }
+        fillTable();
         System.out.println("Closed JPA playground");
+
+
     }
-
-
 }

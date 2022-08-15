@@ -3,14 +3,15 @@ package sk.tuke.gamestudio.minesweeper.consoleui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import sk.tuke.gamestudio.entity.Comment;
-import sk.tuke.gamestudio.entity.Rating;
-import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.entity.*;
 import sk.tuke.gamestudio.minesweeper.UserInterface;
 import sk.tuke.gamestudio.minesweeper.core.Field;
 import sk.tuke.gamestudio.minesweeper.core.GameState;
@@ -20,7 +21,7 @@ public class ConsoleUI implements UserInterface {
 
     private Field field;
     private Settings settings;
-    private String nameOfPlayer;
+    public String nameOfPlayer;
     private final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     private static final Pattern PATTERN = Pattern.compile("([MO])([A-Za-z])(\\d{1,2})");
     private static final int CHARINDEX = 65;
@@ -29,13 +30,22 @@ public class ConsoleUI implements UserInterface {
 //    Minesweeper instance = Minesweeper.getInstance();
 
     @Autowired
-    private  ScoreService scoreService;
+    private ScoreService scoreService;
 
     @Autowired
     private RatingService ratingService;
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private PlayerService playerService;
+
+    @Autowired
+    private CountryService countryService;
+
+    @Autowired
+    private OccupationService occupationService;
 
     private String readLine() {
         try {
@@ -58,8 +68,33 @@ public class ConsoleUI implements UserInterface {
     public void newGameStarted(Field field) {
         this.field = field;
 
-
         handleInputName();
+        System.out.println("Choose your PlayerProfile from below (press digit before UserName)or press 0 for create new Player");
+        List<Player> listOfPlayers = playerService.getPlayersByUserName(nameOfPlayer);
+        System.out.println(listOfPlayers);
+
+        String choise = readLine();
+        try {
+            int choiseInt = Integer.parseInt(choise);
+            if (choiseInt == 0) {
+                createNewPlayer();
+            } else {
+                for (Player player : listOfPlayers) {
+                    if (player.getID() == choiseInt) {
+                        //continue with this
+                        break;
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("Input data is not correct. Try again");
+            newGameStarted(field);
+
+        }
+//
+
 
         System.out.println("Input game level \n B - BEGINNER  \t I - INTERMEDIATE \t E - EXPERT");
         try {
@@ -94,7 +129,56 @@ public class ConsoleUI implements UserInterface {
             }
         }
 
-            while (true);
+        while (true);
+    }
+
+    private void createNewPlayer() {
+        Random rd = new Random();
+        System.out.println("Input fullName");
+        String fullName = readLine();
+        Occupation occupForWrite = null;
+        Country countryForWrire = null;
+        System.out.println("Choose your occupation. Press number at the start of line");
+        List<Occupation> listOfOccup = occupationService.getOccupation();
+        List<Country> listOfCount = countryService.getCountries();
+        System.out.println(listOfOccup);
+        try {
+            int idOccup = Integer.parseInt(readLine());
+            for (Occupation o : listOfOccup) {
+                if (o.getID()==idOccup) {
+                    occupForWrite = o;
+                    break;
+                }
+            }
+            if (occupForWrite == null) throw new GameStudioException();
+
+            System.out.println("Choose your country. Press number at the start of line or press O for add new country");
+            System.out.println(listOfCount);
+            int idCount = Integer.parseInt(readLine());
+            for (Country c : listOfCount) {
+                if (c.getID()==idCount) {
+                    countryForWrire = c;
+                    break;
+                }
+                if (idCount==0) {
+                    countryForWrire = createNewCountry();
+                }
+            }
+            if (countryForWrire == null) throw new GameStudioException();
+
+        }
+        catch (Exception e) {
+            System.out.println("Input data is incorrect.Try again");
+            createNewPlayer();
+        }
+        playerService.addPlayer(new Player(nameOfPlayer, fullName, rd.nextInt(11), countryForWrire, occupForWrite));
+    }
+
+    private Country createNewCountry() {
+        System.out.println("Input name of country");
+        Country country = new Country(readLine());
+        countryService.addCountry(country);
+        return country;
     }
 
     private void handleInputName() {
@@ -114,9 +198,9 @@ public class ConsoleUI implements UserInterface {
     }
 
     private void endOfGame() {
-        handlerOfWriterComment();
-        handlerOfGivingRate();
-        printScoresAndComment();
+//        handlerOfWriterComment();
+//        handlerOfGivingRate();
+//        printScoresAndComment();
     }
 
     private void handlerOfGivingRate() {
