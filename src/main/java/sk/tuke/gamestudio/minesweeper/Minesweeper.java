@@ -1,6 +1,6 @@
 package sk.tuke.gamestudio.minesweeper;
 
-import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUIMinesSweeper;
 
 public class Minesweeper {
 
@@ -15,7 +15,7 @@ public class Minesweeper {
 
     private Minesweeper() {
         instance = this;
-          final UserInterface userInterface = new ConsoleUI();
+          final UserInterface userInterface = new ConsoleUIMinesSweeper();
           userInterface.play();
     }
 

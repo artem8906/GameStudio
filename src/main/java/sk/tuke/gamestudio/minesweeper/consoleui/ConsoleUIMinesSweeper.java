@@ -3,7 +3,6 @@ package sk.tuke.gamestudio.minesweeper.consoleui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +16,7 @@ import sk.tuke.gamestudio.minesweeper.core.Field;
 import sk.tuke.gamestudio.minesweeper.core.GameState;
 import sk.tuke.gamestudio.service.*;
 
-public class ConsoleUI implements UserInterface {
+public class ConsoleUIMinesSweeper implements UserInterface {
 
     private Field field;
     private Settings settings;

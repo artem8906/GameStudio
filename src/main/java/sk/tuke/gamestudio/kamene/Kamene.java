@@ -1,6 +1,6 @@
 package sk.tuke.gamestudio.kamene;
 
-import sk.tuke.gamestudio.kamene.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.kamene.consoleui.ConsoleUIKamene;
 
 public class Kamene {
 
@@ -12,9 +12,8 @@ public class Kamene {
     }
 
     private Kamene() {
-
         instance = this;
-        final ConsoleUI userInterface = new ConsoleUI();
+        final ConsoleUIKamene userInterface = new ConsoleUIKamene();
         userInterface.play();
     }
 

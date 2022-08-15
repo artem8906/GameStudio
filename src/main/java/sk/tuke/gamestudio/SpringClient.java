@@ -1,22 +1,17 @@
 package sk.tuke.gamestudio;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.web.client.RestTemplate;
 //import sk.tuke.gamestudio.minesweeper.PlaygroundJPA;
-import sk.tuke.gamestudio.minesweeper.PlaygroundJPA;
-import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUI;
+import sk.tuke.gamestudio.kamene.consoleui.ConsoleUIKamene;
+import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUIMinesSweeper;
 import sk.tuke.gamestudio.service.*;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 @SpringBootApplication
 @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
@@ -27,13 +22,13 @@ public class SpringClient {
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
 
-    @Bean
-    public CommandLineRunner runner (ConsoleUI console) {
-        return s->console.play();
-    }
+//    @Bean
+//    public CommandLineRunner runnerMinesSweeper (ConsoleUIMinesSweeper console) {
+//        return s->console.play();
+//    }
 
     @Bean
-    public CommandLineRunner runnerKamene (ConsoleUI console) {
+    public CommandLineRunner runnerKamene (ConsoleUIKamene console) {
         return s->console.play();
     }
 
@@ -42,11 +37,14 @@ public class SpringClient {
 //        return s->console.play();
 //    }
 
-
+    @Bean
+    public ConsoleUIMinesSweeper consoleMinesSweeper() {
+        return new ConsoleUIMinesSweeper();
+    }
 
     @Bean
-    public ConsoleUI console() {
-        return new ConsoleUI();
+    public ConsoleUIKamene consoleKamene() {
+        return new ConsoleUIKamene();
     }
 
 //    @Bean
