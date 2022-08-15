@@ -14,20 +14,18 @@ public class RatingWebServiceRest {
     private RatingService ratingService;
 
     @GetMapping("/{game}")
-    public int getRating(@PathVariable String game) {
-        return ratingService.getRating(game, "Artem");
+    public int getRating(@PathVariable String game, String name) {
+        return ratingService.getRating(game, name);
 
     }
 
-//    @PostMapping
-//    public void addRating(@RequestBody Rating rating) {
-//        ratingService.setRating(rating);
-//    }
-
-    @PostMapping
+    @PostMapping @GetMapping
     public void addRating(@RequestBody Rating rating) {
+        if (ratingService.getRating(rating.getGame(), rating.getUsername())==0) {
+            ratingService.setRating(rating);
+        }
+        else {
 
-
-        ratingService.setRating(rating);
+        }
     }
 }

@@ -19,6 +19,7 @@ public class ConsoleUIKamene {
     private Field field;
     private String name;
     private final String game = "Kamene";
+    int score;
     private final BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
     @Autowired
@@ -57,9 +58,8 @@ public class ConsoleUIKamene {
 
             if (field.isSolved()) {
                 int timeOfPlay = (int) (System.currentTimeMillis() - field.getStartTime())/1000000;
-                int score = field.getSize() * 100 - timeOfPlay;
+                score = field.getSize() * 100 - timeOfPlay;
                 System.out.println("You win. Your score is "+ score);
-                scoreService.addScore(new Score(game, name, score, new Date()));
 
                 endOfGame();
 
@@ -69,9 +69,15 @@ public class ConsoleUIKamene {
     }
 
     private void endOfGame() {
-        handlerOfWriterComment();
-        handlerOfGivingRate();
-        printScoresAndComment();
+        try {
+            scoreService.addScore(new Score(game, name, score, new Date()));
+            handlerOfWriterComment();
+            handlerOfGivingRate();
+            printScoresAndComment();
+        }
+        catch (Exception e) {
+            throw new GameStudioException(e);
+        }
     }
 
     private void handlerOfGivingRate() {

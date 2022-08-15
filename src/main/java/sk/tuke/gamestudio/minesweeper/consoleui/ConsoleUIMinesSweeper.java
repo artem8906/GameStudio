@@ -90,7 +90,6 @@ public class ConsoleUIMinesSweeper implements UserInterface {
             newGameStarted(field);
 
         }
-//
 
 
         System.out.println("Input game level \n B - BEGINNER  \t I - INTERMEDIATE \t E - EXPERT");
@@ -110,19 +109,22 @@ public class ConsoleUIMinesSweeper implements UserInterface {
             processInput();
 
             var fieldState = this.field.getState();
+            try {
+                if (fieldState == GameState.FAILED) {
+                    scoreService.addScore(new Score(NAMEGAME, nameOfPlayer, 0, new Date()));
+                    System.out.println("Loss. Your score is 0");
+                    endOfGame();
+                    System.exit(0);
+                }
 
-            if (fieldState == GameState.FAILED) {
-                scoreService.addScore(new Score(NAMEGAME, nameOfPlayer, 0, new Date()));
-                System.out.println("Loss. Your score is 0");
-                endOfGame();
-                System.exit(0);
-            }
-
-            if (fieldState == GameState.SOLVED) {
-                scoreService.addScore(new Score(NAMEGAME, nameOfPlayer, this.field.getScore(), new Date()));
-                System.out.println("Win. Your score is " + this.field.getScore());
-                endOfGame();
-                System.exit(0);
+                if (fieldState == GameState.SOLVED) {
+                    scoreService.addScore(new Score(NAMEGAME, nameOfPlayer, this.field.getScore(), new Date()));
+                    System.out.println("Win. Your score is " + this.field.getScore());
+                    endOfGame();
+                    System.exit(0);
+                }
+            } catch (Exception e) {
+                throw new GameStudioException(e);
             }
         }
 
@@ -133,7 +135,7 @@ public class ConsoleUIMinesSweeper implements UserInterface {
         Random rd = new Random();
         System.out.println("Input fullName");
         String fullName = readLine();
-        if (fullName.length()>128 | fullName.length()==0) {
+        if (fullName.length() > 128 | fullName.length() == 0) {
             System.out.println("fullName is incorrect. Try again");
             fullName = readLine();
         }
@@ -146,7 +148,7 @@ public class ConsoleUIMinesSweeper implements UserInterface {
         try {
             int idOccup = Integer.parseInt(readLine());
             for (Occupation o : listOfOccup) {
-                if (o.getID()==idOccup) {
+                if (o.getID() == idOccup) {
                     occupForWrite = o;
                     break;
                 }
@@ -162,14 +164,13 @@ public class ConsoleUIMinesSweeper implements UserInterface {
                     break;
                 }
             }
-                if (idCount==0) {
-                    countryForWrire = createNewCountry();
-                }
+            if (idCount == 0) {
+                countryForWrire = createNewCountry();
+            }
 
             if (countryForWrire == null) throw new GameStudioException();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Input data is incorrect.Try again");
             createNewPlayer();
         }
@@ -179,7 +180,7 @@ public class ConsoleUIMinesSweeper implements UserInterface {
     private Country createNewCountry() {
         System.out.println("Input name of country");
         String nameOfCountry = readLine();
-        if (nameOfCountry.length()>128 | nameOfCountry.length()==0) {
+        if (nameOfCountry.length() > 128 | nameOfCountry.length() == 0) {
             System.out.println("Name of country is incorrect. Try again");
             createNewCountry();
         }
@@ -201,7 +202,11 @@ public class ConsoleUIMinesSweeper implements UserInterface {
     public void play() {
         settings = Settings.load();
         Field field = new Field(settings.getRowCount(), settings.getColumnCount(), settings.getMineCount());
-        newGameStarted(field);
+        try {
+            newGameStarted(field);
+        } catch (Exception e) {
+            throw new GameStudioException(e);
+        }
     }
 
     private void endOfGame() {

@@ -31,6 +31,11 @@ public class Rating {
     public Rating() {
     }
 
+    public void Rating(int rating) {
+        this.rate = rating;
+    }
+
+
     public String getGame() {
         return game;
     }
