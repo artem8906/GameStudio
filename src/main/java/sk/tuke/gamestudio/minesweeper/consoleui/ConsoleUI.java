@@ -27,7 +27,6 @@ public class ConsoleUI implements UserInterface {
     private static final int CHARINDEX = 65;
 
     private static final String NAMEGAME = "MinesSweeper";
-//    Minesweeper instance = Minesweeper.getInstance();
 
     @Autowired
     private ScoreService scoreService;
@@ -156,14 +155,15 @@ public class ConsoleUI implements UserInterface {
             System.out.println(listOfCount);
             int idCount = Integer.parseInt(readLine());
             for (Country c : listOfCount) {
-                if (c.getID()==idCount) {
+                if (c.getID() == idCount) {
                     countryForWrire = c;
                     break;
                 }
+            }
                 if (idCount==0) {
                     countryForWrire = createNewCountry();
                 }
-            }
+
             if (countryForWrire == null) throw new GameStudioException();
 
         }
@@ -198,7 +198,7 @@ public class ConsoleUI implements UserInterface {
     }
 
     private void endOfGame() {
-//        handlerOfWriterComment();
+        handlerOfWriterComment();
 //        handlerOfGivingRate();
 //        printScoresAndComment();
     }

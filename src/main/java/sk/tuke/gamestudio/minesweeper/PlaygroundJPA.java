@@ -70,7 +70,6 @@ public class PlaygroundJPA {
     occupationService.addOccupation(new Occupation("ziak"));
     Occupation occupation1 = new Occupation("student");
     occupationService.addOccupation(occupation1);
-    occupationService.addOccupation(new Occupation("student"));
     occupationService.addOccupation(new Occupation("zamestnanec"));
     occupationService.addOccupation(new Occupation("zivnostnik"));
     occupationService.addOccupation(new Occupation("nezamestnany"));

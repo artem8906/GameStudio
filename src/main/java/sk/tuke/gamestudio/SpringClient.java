@@ -32,6 +32,11 @@ public class SpringClient {
         return s->console.play();
     }
 
+    @Bean
+    public CommandLineRunner runnerKamene (ConsoleUI console) {
+        return s->console.play();
+    }
+
 //    @Bean
 //    public CommandLineRunner runnerJPA (PlaygroundJPA console) {
 //        return s->console.play();
@@ -56,7 +61,7 @@ public class SpringClient {
 
     @Bean
     public CommentService commentService() {
-        return new CommentServiceJPA();
+        return new CommentServiceRest();
 
     }
 
