@@ -67,13 +67,12 @@ public class ConsoleUIMinesSweeper implements UserInterface {
         this.field = field;
 
         handleInputName();
-        System.out.println("Choose your PlayerProfile from below (press digit before UserName)or press 0 for create new Player");
+        System.out.println("Choose your PlayerProfile from below (press digit before UserName) or press 0 for create new Player");
         List<Player> listOfPlayers = playerService.getPlayersByUserName(nameOfPlayer);
         System.out.println(listOfPlayers);
 
-        String choise = readLine();
         try {
-            int choiseInt = Integer.parseInt(choise);
+            int choiseInt = Integer.parseInt(readLine());
             if (choiseInt == 0) {
                 createNewPlayer();
             } else {
@@ -134,6 +133,10 @@ public class ConsoleUIMinesSweeper implements UserInterface {
         Random rd = new Random();
         System.out.println("Input fullName");
         String fullName = readLine();
+        if (fullName.length()>128 | fullName.length()==0) {
+            System.out.println("fullName is incorrect. Try again");
+            fullName = readLine();
+        }
         Occupation occupForWrite = null;
         Country countryForWrire = null;
         System.out.println("Choose your occupation. Press number at the start of line");
@@ -175,7 +178,12 @@ public class ConsoleUIMinesSweeper implements UserInterface {
 
     private Country createNewCountry() {
         System.out.println("Input name of country");
-        Country country = new Country(readLine());
+        String nameOfCountry = readLine();
+        if (nameOfCountry.length()>128 | nameOfCountry.length()==0) {
+            System.out.println("Name of country is incorrect. Try again");
+            createNewCountry();
+        }
+        Country country = new Country(nameOfCountry);
         countryService.addCountry(country);
         return country;
     }
@@ -198,8 +206,8 @@ public class ConsoleUIMinesSweeper implements UserInterface {
 
     private void endOfGame() {
         handlerOfWriterComment();
-//        handlerOfGivingRate();
-//        printScoresAndComment();
+        handlerOfGivingRate();
+        printScoresAndComment();
     }
 
     private void handlerOfGivingRate() {
@@ -244,7 +252,7 @@ public class ConsoleUIMinesSweeper implements UserInterface {
         System.out.println("Last comments are:");
         System.out.println(commentService.getComments(NAMEGAME));
 
-        System.out.println("Average rating of this game is " + new RatingServiceJDBC().getAverageRating(NAMEGAME));
+        System.out.println("Average rating of this game is " + ratingService.getAverageRating(NAMEGAME));
     }
 
     @Override

@@ -17,6 +17,7 @@ public class RatingServiceRest implements RatingService{
     @Override
     public void setRating(Rating rating) {
 
+
     }
 
     @Override

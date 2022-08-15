@@ -22,15 +22,15 @@ public class SpringClient {
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
 
-//    @Bean
-//    public CommandLineRunner runnerMinesSweeper (ConsoleUIMinesSweeper console) {
-//        return s->console.play();
-//    }
-
     @Bean
-    public CommandLineRunner runnerKamene (ConsoleUIKamene console) {
+    public CommandLineRunner runnerMinesSweeper (ConsoleUIMinesSweeper console) {
         return s->console.play();
     }
+
+//    @Bean
+//    public CommandLineRunner runnerKamene (ConsoleUIKamene console) {
+//        return s->console.play();
+//    }
 
 //    @Bean
 //    public CommandLineRunner runnerJPA (PlaygroundJPA console) {

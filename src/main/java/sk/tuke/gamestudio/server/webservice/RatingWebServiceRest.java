@@ -27,6 +27,7 @@ public class RatingWebServiceRest {
     @PostMapping
     public void addRating(@RequestBody Rating rating) {
 
+
         ratingService.setRating(rating);
     }
 }

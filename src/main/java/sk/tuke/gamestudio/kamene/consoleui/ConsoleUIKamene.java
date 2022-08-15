@@ -5,9 +5,7 @@ import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.kamene.core.Field;
-import sk.tuke.gamestudio.service.CommentService;
-import sk.tuke.gamestudio.service.RatingService;
-import sk.tuke.gamestudio.service.ScoreService;
+import sk.tuke.gamestudio.service.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,13 +37,18 @@ public class ConsoleUIKamene {
             return null;
         }
     }
-
+    private void inputName()  {
+        System.out.println("Enter you name");
+        name = readLine();
+        if (name.length() < 1 | name.length() > 64) {
+            System.out.println("Name is too short or too long. Try again");
+            inputName();
+        }
+    }
     public void play() {
         this.field = new Field(4);
-        System.out.println("Input your name");
-        name = readLine();
+        inputName();
         field.generate();
-
 
         do {
             update();
@@ -54,23 +57,67 @@ public class ConsoleUIKamene {
 
             if (field.isSolved()) {
                 int timeOfPlay = (int) (System.currentTimeMillis() - field.getStartTime())/1000000;
-                int score = field.getSize() * 1000 - timeOfPlay;
+                int score = field.getSize() * 100 - timeOfPlay;
                 System.out.println("You win. Your score is "+ score);
                 scoreService.addScore(new Score(game, name, score, new Date()));
-                System.out.println("Best score are:");
-                System.out.println(scoreService.getBestScores(game));
-                System.out.println("Write a comment");
-                commentService.addComment(new Comment(game, name, readLine(), new Date()));
-                System.out.println("Last comments are:");
-                commentService.getComments(game);
-                System.out.println("Rate this game");
-                ratingService.setRating(new Rating(game, name, Integer.parseInt(readLine()), new Date()));
-                System.out.println("Average rating of this game: "+ ratingService.getAverageRating(game));
+
+                endOfGame();
+
                 System.exit(1);
             }
         } while (true);
     }
 
+    private void endOfGame() {
+        handlerOfWriterComment();
+        handlerOfGivingRate();
+        printScoresAndComment();
+    }
+
+    private void handlerOfGivingRate() {
+        try {
+            rateGame();
+        } catch (Exception e) {
+            System.out.println("From 1 to 5 only. Try again");
+            handlerOfGivingRate();
+        }
+    }
+
+    private void handlerOfWriterComment() {
+        try {
+            writeComment();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            handlerOfWriterComment();
+        }
+    }
+
+    private void writeComment() throws IOException {
+        System.out.println("Write you comment");
+        String comment = input.readLine();
+        if (comment.length() > 1000 | comment.length() == 0) {
+            throw new GameStudioException("Comment is too long or too short. Try again");
+        }
+        commentService.addComment(new Comment(game, name, comment, new Date()));
+    }
+
+    private void rateGame() throws IOException {
+        System.out.println("Rate this game (from 1 to 5)");
+        int rate = Integer.valueOf(input.readLine());
+        if (rate < 1 | rate > 5) throw new GameStudioException();
+        ratingService.setRating(
+                new Rating(game, name, rate, new Date()));
+    }
+
+    private void printScoresAndComment() {
+        System.out.println("Best scores are");
+        System.out.println(scoreService.getBestScores(game));
+
+        System.out.println("Last comments are:");
+        System.out.println(commentService.getComments(game));
+
+        System.out.println("Average rating of this game is " + ratingService.getAverageRating(game));
+    }
 
 
     public void update() {
