@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.web.client.RestTemplate;
-//import sk.tuke.gamestudio.minesweeper.PlaygroundJPA;
 import sk.tuke.gamestudio.kamene.consoleui.ConsoleUIKamene;
+import sk.tuke.gamestudio.minesweeper.PlaygroundJPA;
 import sk.tuke.gamestudio.minesweeper.consoleui.ConsoleUIMinesSweeper;
 import sk.tuke.gamestudio.service.*;
 
@@ -47,10 +47,10 @@ public class SpringClient {
         return new ConsoleUIKamene();
     }
 
-//    @Bean
-//    public PlaygroundJPA consoleJPA() {
-//        return new PlaygroundJPA();
-//    }
+    @Bean
+    public PlaygroundJPA consoleJPA() {
+        return new PlaygroundJPA();
+    }
 
     @Bean
     public ScoreService scoreService(){
@@ -65,7 +65,7 @@ public class SpringClient {
 
     @Bean
     public RatingService ratingService() {
-        return new RatingServiceJPA();
+        return new RatingServiceRest();
     }
 
 

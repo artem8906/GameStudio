@@ -22,4 +22,12 @@ public class CountryServiceJPA implements CountryService {
     public void addCountry(Country country) {
         entityManager.persist(country);
     }
+
+    @Override
+    public Country getCountryByName(String name) {
+        return (Country) entityManager.createQuery("select c from Country c where c.name = :Name")
+                .setParameter("Name", name)
+                .getSingleResult();
+
+    }
 }

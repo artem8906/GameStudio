@@ -7,6 +7,7 @@ import sk.tuke.gamestudio.service.CommentService;
 import sk.tuke.gamestudio.service.RatingService;
 
 
+
 @RestController
 @RequestMapping("/api/rates")
 public class RatingWebServiceRest {
@@ -19,13 +20,19 @@ public class RatingWebServiceRest {
 
     }
 
-    @PostMapping @GetMapping
+    @PostMapping("/{game}") @GetMapping("/{game}")
     public void addRating(@RequestBody Rating rating) {
-        if (ratingService.getRating(rating.getGame(), rating.getUsername())==0) {
-            ratingService.setRating(rating);
-        }
-        else {
+//        Rating toUpdate = ratingService.getRating(rating.getGame(), rating.getUsername());
+//        if (toUpdate.getRate()==0) {
+//            ratingService.setRating(rating);
+//        }
+//        else {
+//            toUpdate.setRatedOn(new Date());
+//            toUpdate.setRate(rating.getRate());
+//            ratingService.setRating();
+//        }
+        ratingService.setRating(rating);
 
         }
     }
-}
+

@@ -184,6 +184,11 @@ public class ConsoleUIMinesSweeper implements UserInterface {
             System.out.println("Name of country is incorrect. Try again");
             createNewCountry();
         }
+
+        if (countryService.getCountryByName(nameOfCountry)!=null) {
+            System.out.println("This country already exists");
+            return countryService.getCountryByName(nameOfCountry);
+        }
         Country country = new Country(nameOfCountry);
         countryService.addCountry(country);
         return country;

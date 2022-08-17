@@ -7,4 +7,7 @@ import java.util.List;
 public interface CountryService {
     public List<Country> getCountries();
     void addCountry(Country country);
+
+    Country getCountryByName(String name);
+
 }

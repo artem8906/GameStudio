@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.entity.Rating;
 
@@ -21,9 +22,23 @@ public class RatingServiceRest implements RatingService{
 
     @Override
     public void setRating(Rating rating) {
-        template.postForEntity(url+"/rates/"+rating.getGame(), rating, Rating[].class);
 
+        Rating toUpdate = null;
+        var arr = template.getForEntity(url + "/rates/" + rating.getGame(), Rating[].class).getBody();
 
+        for (Rating r : arr) {
+            if (r.getGame().equals(rating.getGame()) && r.getUsername().equals(rating.getUsername())) {
+                toUpdate = r;
+            }
+        }
+        if (toUpdate == null) {
+            template.postForEntity(url + "/rates/" + rating.getGame(), rating, Rating[].class);
+        } else {
+            toUpdate.setRate(rating.getRate());
+            toUpdate.setRatedOn(new Date());
+            HttpEntity<Rating> requestUpdate = new HttpEntity<>(toUpdate);
+            template.exchange(url + "/rates/" + rating.getGame(), HttpMethod.PUT, requestUpdate, Void.class);
+        }
     }
 
     @Override
