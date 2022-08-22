@@ -66,10 +66,13 @@ public class MinesweeperController {
         for (int row = 0; row < rowCount; row++) {
             sb.append("<tr>\n");
 
+
             for (int col = 0; col < columnCount; col++) {
-                sb.append("<td> ");
+                Tile tile = field.getTiles(row,col);
+                sb.append("<td class='" + getTileClass(tile) + "'> ");
+//                sb.append("<td> ");
                 sb.append("<a href='/minesweeper/?row="+row+"&column="+col+"'> ");
-                sb.append(getTileText(field.getTiles(row, col)));
+                sb.append("<span>" + getTileText(tile) + "</span>");
                 sb.append(" </a>\n");
                 sb.append(" </td>\n");
             }
@@ -95,6 +98,22 @@ public class MinesweeperController {
             default: throw new GameStudioException("Unsupported tile state "+ tile.getState());
         }
         }
+
+    private String getTileClass(Tile tile) {
+        switch (tile.getState()) {
+            case OPEN:
+                if (tile instanceof Clue)
+                    return "open" + ((Clue) tile).getValue();
+                else
+                    return "mine";
+            case CLOSED:
+                return "closed";
+            case MARKED:
+                return "marked";
+            default:
+                throw new RuntimeException("Unexpected tile state");
+        }
+    }
 
 
 }

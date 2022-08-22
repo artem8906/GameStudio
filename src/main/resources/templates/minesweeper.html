@@ -15,18 +15,16 @@
 <body>
 
 <h2>Minesweeper</h2>
-<!--<div th:text="${1+2}"></div>-->
-<!--<div th:text="${@minesweeperController.getCurrentTime}"></div>-->
 
 
 <div class="minesControl">
     <span th:if="${@minesweeperController.marking}">
-        You are opening
+        You are marking
         <a  class="abutton" href="/minesweeper/mark">Change to open.</a>
     </span>
 
     <span th:if="not ${@minesweeperController.marking}">
-        You are marked
+        You are opening
         <a  class="abutton" href="/minesweeper/mark">Change to mark.</a>
     </span>
 
