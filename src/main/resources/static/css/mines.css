@@ -51,6 +51,12 @@ table.scores {
     border: black 2px;
 }
 
+table.scores caption {
+    font-weight: bold;
+    color: black;
+    font-size: 25;
+}
+
 table.scores th {
     font-weight: bold;
     color: #FFFFFF;

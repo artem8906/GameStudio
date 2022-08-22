@@ -279,7 +279,7 @@ public class ConsoleUIMinesSweeper implements UserInterface {
             a++;
             for (int j = 0; j < field.getColumnCount(); j++) {
                 if (j > 9) System.out.print(" ");
-                System.out.print(field.getTiles(i, j) + " ");
+                System.out.print(field.getTile(i, j) + " ");
             }
             System.out.println();
         }

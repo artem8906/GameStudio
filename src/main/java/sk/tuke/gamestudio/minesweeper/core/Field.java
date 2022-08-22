@@ -1,7 +1,5 @@
 package sk.tuke.gamestudio.minesweeper.core;
 
-import sk.tuke.gamestudio.minesweeper.Minesweeper;
-
 import java.util.Random;
 
 /**
@@ -82,7 +80,7 @@ public class Field {
         return state;
     }
 
-    public Tile getTiles(int row, int column) {
+    public Tile getTile(int row, int column) {
         return tiles[row][column];
     }
 

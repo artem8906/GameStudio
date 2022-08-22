@@ -6,7 +6,7 @@
     <meta name="author" content="Stefan Korecko" />
     <link rel="stylesheet"
           href="/css/mines.css"
-          media="screen" />
+          media="screen"/>
 
 
     <title>GameStudio - Minesweeper</title>
@@ -33,7 +33,46 @@
 
 </div>
 
-<div th:utext="${@minesweeperController.fieldAsHtml}">
+<!--<div>-->
+<!--<span th:if="${@minesweeperController.isWin}">-->
+<!--    You win.-->
+<!--        </span>-->
+<!--    <span th:utext="${@minesweeperController.getBestScores()}">-->
+<!--     </span>-->
+<!--</div>-->
+
+<!--<div th:utext="${@minesweeperController.fieldAsHtml}">-->
+<!--</div>-->
+
+
+<div>
+    <table class='minefield'>
+        <tr th:each="row: ${minesweeperField}">
+            <td th:each="tile: ${row}"
+                th:attr="class=${@minesweeperController.getTileClass(tile)}">
+                <a th:attr="href='/minesweeper/?row='+${rowStat.index}+'&column='+${tileStat.index}">
+                    <span th:text="${@minesweeperController.getTileText(tile)}"></span>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div>
+    <table class="scores">
+        <caption>Best scores</caption>
+        <th>Player</th>
+        <th>Score</th>
+        <th>Date</th>
+
+        <tr th:each="score: ${bestScores}">
+            <td th:text="${score.getUsername()}">
+            <td th:text="${score.getPoints()}">
+            <td th:text="${score.getPlayedOn()}">
+            </td>
+        </tr>
+    </table>
 </div>
 
 </body>

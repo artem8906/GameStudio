@@ -46,7 +46,7 @@ public class FieldTest {
                     break;
                 }
             }
-            assertEquals(field.getTiles(rowIndex, colIndex).getState(), Tile.State.OPEN);
+            assertEquals(field.getTile(rowIndex, colIndex).getState(), Tile.State.OPEN);
             assertEquals(field.getState(), GameState.FAILED);
         }
     @Test
@@ -98,7 +98,7 @@ public class FieldTest {
             int minesCounter = 0;
             for (int row = 0; row < rowCount; row++) {
                 for (int column = 0; column < columnCount; column++) {
-                    if (field.getTiles(row, column) instanceof Mine) {
+                    if (field.getTile(row, column) instanceof Mine) {
                         minesCounter++;
                     }
                 }
