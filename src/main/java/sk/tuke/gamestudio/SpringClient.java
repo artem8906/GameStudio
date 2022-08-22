@@ -18,19 +18,18 @@ import sk.tuke.gamestudio.service.*;
         pattern = "sk.tuke.gamestudio.server.*"))
 public class SpringClient {
     public static void main(String[] args) {
-
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
 
-//    @Bean
-//    public CommandLineRunner runnerMinesSweeper (ConsoleUIMinesSweeper console) {
-//        return s->console.play();
-//    }
-
     @Bean
-    public CommandLineRunner runnerKamene (ConsoleUIKamene console) {
+    public CommandLineRunner runnerMinesSweeper (ConsoleUIMinesSweeper console) {
         return s->console.play();
     }
+
+//    @Bean
+//    public CommandLineRunner runnerKamene (ConsoleUIKamene console) {
+//        return s->console.play();
+//    }
 
 //    @Bean
 //    public CommandLineRunner runnerJPA (PlaygroundJPA console) {
@@ -65,7 +64,7 @@ public class SpringClient {
 
     @Bean
     public RatingService ratingService() {
-        return new RatingServiceRest();
+        return new RatingServiceJPA();
     }
 
 

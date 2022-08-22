@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="sk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Stefan Korecko" />
+    <link rel="stylesheet"
+          href="/css/mines.css"
+          media="screen" />
+
+
+    <title>GameStudio - Minesweeper</title>
+</head>
+
+<body>
+
+<h2>Minesweeper</h2>
+<!--<div th:text="${1+2}"></div>-->
+<!--<div th:text="${@minesweeperController.getCurrentTime}"></div>-->
+
+
+<div class="minesControl">
+    <span th:if="${@minesweeperController.marking}">
+        You are opening
+        <a  class="abutton" href="/minesweeper/mark">Change to open.</a>
+    </span>
+
+    <span th:if="not ${@minesweeperController.marking}">
+        You are marked
+        <a  class="abutton" href="/minesweeper/mark">Change to mark.</a>
+    </span>
+
+
+    <a  class="abutton" href="/minesweeper/new">New game</a>
+
+</div>
+
+<div th:utext="${@minesweeperController.fieldAsHtml}">
+</div>
+
+</body>
+</html>

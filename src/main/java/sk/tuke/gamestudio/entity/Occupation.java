@@ -9,7 +9,7 @@ public class Occupation {
     @GeneratedValue
     int id;
 
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false, length = 32, unique = true)
     String occupation;
 
     @OneToMany(mappedBy = "id")

@@ -14,13 +14,13 @@ public class RatingWebServiceRest {
     @Autowired
     private RatingService ratingService;
 
-    @GetMapping("/{game}")
-    public int getRating(@PathVariable String game, String name) {
+    @GetMapping("/{game}/{username}")
+    public int getRating(@PathVariable String game, @PathVariable String name) {
         return ratingService.getRating(game, name);
 
     }
 
-    @PostMapping("/{game}") @GetMapping("/{game}")
+    @PostMapping()
     public void addRating(@RequestBody Rating rating) {
 //        Rating toUpdate = ratingService.getRating(rating.getGame(), rating.getUsername());
 //        if (toUpdate.getRate()==0) {

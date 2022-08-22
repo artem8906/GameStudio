@@ -32,14 +32,16 @@ public class RatingServiceRest implements RatingService{
             }
         }
         if (toUpdate == null) {
-            template.postForEntity(url + "/rates/" + rating.getGame(), rating, Rating[].class);
+            template.postForEntity(url + "/rates/" + rating.getGame() + "/" + rating.getUsername(), rating, Rating[].class);
         } else {
             toUpdate.setRate(rating.getRate());
             toUpdate.setRatedOn(new Date());
             HttpEntity<Rating> requestUpdate = new HttpEntity<>(toUpdate);
-            template.exchange(url + "/rates/" + rating.getGame(), HttpMethod.PUT, requestUpdate, Void.class);
+            template.exchange(url + "/rates/" + rating.getGame() + "/" + rating.getUsername(), HttpMethod.PUT, requestUpdate, Void.class);
+//            template.postForEntity(url+"/rates/"+rating.getGame()+"/"+rating.getUsername(), rating, Rating[].class);
         }
     }
+
 
     @Override
     public int getAverageRating(String game) {
@@ -58,7 +60,7 @@ public class RatingServiceRest implements RatingService{
     @Override
     public int getRating(String game, String username) {
         int rate = 0;
-        var arr = template.getForEntity(url+"/rates/"+game, Rating[].class).getBody();
+        var arr = template.getForEntity(url+"/rates/"+game+"/"+username, Rating[].class).getBody();
         for (Rating rating : arr) {
             if (rating.getUsername().equals(username)) {
                 rate = rating.getRate();

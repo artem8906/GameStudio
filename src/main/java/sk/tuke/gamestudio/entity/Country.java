@@ -9,7 +9,7 @@ public class Country {
     @GeneratedValue
     int id;
 
-    @Column(nullable = false, length = 128)
+    @Column(nullable = false, length = 128, unique = true)
     String name;
 
     @OneToMany(mappedBy = "id")
