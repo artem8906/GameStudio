@@ -13,7 +13,7 @@ public class Tile implements Serializable {
     }
 
     public int getValue() {
-        return value;
+            return value;
     }
 
     public void setValue(int value) {

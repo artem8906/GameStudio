@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.minesweeper.core.Clue;
 import sk.tuke.gamestudio.minesweeper.core.Field;
+import sk.tuke.gamestudio.minesweeper.core.GameState;
 import sk.tuke.gamestudio.minesweeper.core.Tile;
 import sk.tuke.gamestudio.service.GameStudioException;
 import sk.tuke.gamestudio.service.ScoreServiceJPA;
@@ -30,7 +31,8 @@ public class MinesweeperController {
     private Field field = new Field(9, 9, 10);
 
     private boolean marking = false;
-    public boolean isWin = true;
+    private boolean isAddScore = false;
+
 
     public boolean getMarking() {
         return marking;
@@ -53,6 +55,10 @@ public class MinesweeperController {
             }
         }
         prepareModel(model);
+        if (field.getState().equals(GameState.SOLVED) && (! isAddScore) ) {
+            scoreServiceJPA.addScore(new Score("MinesSweeper", "Anonym", field.getScore(), new Date()));
+            isAddScore=true;
+        }
         return "minesweeper";
     }
 
@@ -62,14 +68,6 @@ public class MinesweeperController {
         return "minesweeper";
     }
 
-
-//    public String getBestScores() {
-//        StringBuilder sb = new StringBuilder();
-//        List<Score> list = scoreServiceJPA.getBestScores("minesweeper");
-//        sb.append("Best scores are\n");
-//        sb.append (list.get(0).toString());
-//        return sb.toString();
-//    }
 
     public String getFieldAsHtml() {
         int rowCount = field.getRowCount();
@@ -128,8 +126,12 @@ public class MinesweeperController {
     }
 
     public void prepareModel(Model model) {
+
+        model.addAttribute("gameState", field.getState());
         model.addAttribute("minesweeperField", field.getTiles());
         model.addAttribute("bestScores", scoreServiceJPA.getBestScores("MinesSweeper"));
+        model.addAttribute("currentScore", field.getScore());
+
     }
 
 

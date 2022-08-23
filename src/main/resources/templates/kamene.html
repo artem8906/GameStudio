@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="sk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Stefan Korecko" />
+    <link rel="stylesheet"
+          href="/css/mines.css"
+          media="screen"/>
+
+
+    <title>GameStudio - Kamene</title>
+</head>
+
+<body>
+
+<h2>Kamene</h2>
+
+<div th:text="${@kameneController.getFieldAsHtml()}">
+
+<!--<div class="minesControl">-->
+<!--    <span th:if="${@minesweeperController.marking}">-->
+<!--        You are marking-->
+<!--        <a  class="abutton" href="/minesweeper/mark">Change to open.</a>-->
+<!--    </span>-->
+
+<!--    <span th:if="not ${@minesweeperController.marking}">-->
+<!--        You are opening-->
+<!--        <a  class="abutton" href="/minesweeper/mark">Change to mark.</a>-->
+<!--    </span>-->
+
+<!--    <a  class="abutton" href="/minesweeper/new">New game</a>-->
+
+<!--</div>-->
+
+<!--<div>-->
+<!--    The game state is <span th:text="${gameState}"></span>-->
+<!--    <span th:if="${gameState == 'SOLVED'}">-->
+<!--        Your score is <span th:text="${currentScore}"></span></span>-->
+<!--</div>-->
+
+
+<!--<div>-->
+<!--    <table class='minefield'>-->
+<!--        <tr th:each="row: ${minesweeperField}">-->
+<!--            <td th:each="tile: ${row}"-->
+<!--                th:attr="class=${@minesweeperController.getTileClass(tile)}">-->
+<!--                <a th:attr="href='/minesweeper/?row='+${rowStat.index}+'&column='+${tileStat.index}">-->
+<!--                    <span th:text="${@minesweeperController.getTileText(tile)}"></span>-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
+
+
+<div>
+    <table class="scores">
+        <caption>Best scores</caption>
+        <th>Player</th>
+        <th>Score</th>
+        <th>Date</th>
+
+        <tr th:each="score: ${bestScores}">
+            <td th:text="${score.getUsername()}">
+            <td th:text="${score.getPoints()}">
+            <td th:text="${score.getPlayedOn()}">
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

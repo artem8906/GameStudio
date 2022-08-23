@@ -58,8 +58,8 @@ public class ConsoleUIKamene {
 
             if (field.isSolved()) {
                 int timeOfPlay = (int) (System.currentTimeMillis() - field.getStartTime())/1000000;
-                score = field.getSize() * 100 - timeOfPlay;
-                System.out.println("You win. Your score is "+ score);
+                field.setScore(field.getSize() * 100 - timeOfPlay);
+                System.out.println("You win. Your score is "+ field.getScore());
 
                 endOfGame();
 
@@ -70,7 +70,7 @@ public class ConsoleUIKamene {
 
     private void endOfGame() {
         try {
-            scoreService.addScore(new Score(game, name, score, new Date()));
+            scoreService.addScore(new Score(game, name, field.getScore(), new Date()));
             handlerOfWriterComment();
             handlerOfGivingRate();
             printScoresAndComment();

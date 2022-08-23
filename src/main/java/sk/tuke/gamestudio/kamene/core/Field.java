@@ -15,6 +15,22 @@ public class Field implements Serializable {
 
     private long startTime;
 
+    private GameState gameState = GameState.PLAYING;
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    private int score;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public long getStartTime() {
         return startTime;
     }
@@ -27,6 +43,10 @@ public class Field implements Serializable {
         this.size = size;
         tiles = new Tile[size][size];
         startTime = System.currentTimeMillis();
+    }
+
+    public Tile getTile(int a, int b) {
+        return getTiles()[a][b];
     }
 
 
@@ -111,13 +131,15 @@ public class Field implements Serializable {
 
         Random rd = new Random();
         int count = 1;
-        tiles[3][2] = new Tile();
+
+        tiles[3][2] = new Tile();//must be random, but for easy win is 3 and 2 index
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Tile tile = new Tile();
                 if (tiles[i][j] == null) {
                     tiles[i][j] = tile;
                     tile.setValue(count++);
+
                 }
             }
         }
@@ -135,7 +157,12 @@ public class Field implements Serializable {
         }
         if (tiles[size-1][size-1].value==0) idealCount++;
 
-        return count == idealCount;
+        if (count == idealCount) {
+            gameState = GameState.SOLVED;
+            return true;
+        }
+        else return false;
+
     }
 
     public void savefield() {
