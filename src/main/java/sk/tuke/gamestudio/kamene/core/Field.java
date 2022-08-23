@@ -43,6 +43,7 @@ public class Field implements Serializable {
         this.size = size;
         tiles = new Tile[size][size];
         startTime = System.currentTimeMillis();
+        generate();
     }
 
     public Tile getTile(int a, int b) {
@@ -132,7 +133,7 @@ public class Field implements Serializable {
         Random rd = new Random();
         int count = 1;
 
-        tiles[3][2] = new Tile();//must be random, but for easy win is 3 and 2 index
+        tiles[rd.nextInt(4)][rd.nextInt(4)] = new Tile();//must be random, but for easy win is 3 and 2 index
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 Tile tile = new Tile();

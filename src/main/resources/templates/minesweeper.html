@@ -1,18 +1,23 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="sk">
+<!--    <meta charset="UTF-8" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <meta name="author" content="Stefan Korecko" />-->
+<!--    <link rel="stylesheet"-->
+<!--          href="/css/mines.css"-->
+<!--          media="screen"/>-->
+
+<html lang="sk"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Stefan Korecko" />
-    <link rel="stylesheet"
-          href="/css/mines.css"
-          media="screen"/>
-
-
     <title>GameStudio - Minesweeper</title>
 </head>
 
 <body>
+
+<main layout:fragment="content">
 
 <h2>Minesweeper</h2>
 
@@ -68,6 +73,8 @@
         </tr>
     </table>
 </div>
+
+</main>
 
 </body>
 </html>

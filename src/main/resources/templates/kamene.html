@@ -6,17 +6,22 @@
     <meta name="author" content="Stefan Korecko" />
     <link rel="stylesheet"
           href="/css/mines.css"
-          media="screen"/>
+          media="screen" />
 
 
     <title>GameStudio - Kamene</title>
 </head>
-
 <body>
+
 
 <h2>Kamene</h2>
 
-<div th:text="${@kameneController.getFieldAsHtml()}">
+
+<div class="minesControl">
+
+    <a  class="abutton" href="/kamene/new">New game</a></div>
+
+<!--<div th:text="${@kameneController.getFieldAsHtml()}">-->
 
 <!--<div class="minesControl">-->
 <!--    <span th:if="${@minesweeperController.marking}">-->
@@ -40,18 +45,15 @@
 <!--</div>-->
 
 
-<!--<div>-->
-<!--    <table class='minefield'>-->
-<!--        <tr th:each="row: ${minesweeperField}">-->
-<!--            <td th:each="tile: ${row}"-->
-<!--                th:attr="class=${@minesweeperController.getTileClass(tile)}">-->
-<!--                <a th:attr="href='/minesweeper/?row='+${rowStat.index}+'&column='+${tileStat.index}">-->
-<!--                    <span th:text="${@minesweeperController.getTileText(tile)}"></span>-->
-<!--                </a>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
+<div>
+    <table class='minefield'>
+        <tr th:each="row: ${kameneField}">
+            <td th:each="tile: ${row}">
+                <span th:text="${@kameneController.getTileText(tile)}"></span>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
 <div>

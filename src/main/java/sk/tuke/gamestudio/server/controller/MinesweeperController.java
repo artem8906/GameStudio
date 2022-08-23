@@ -25,6 +25,10 @@ import java.util.List;
 @RequestMapping("/minesweeper")
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class MinesweeperController {
+
+    @Autowired
+    UserController userController;
+
     @Autowired
     ScoreServiceJPA scoreServiceJPA;
 
@@ -47,15 +51,17 @@ public class MinesweeperController {
 
     @RequestMapping
     public String minesweeper(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
-        if (row != null && column != null) {
+        if (row != null && column != null && field.getState().equals(GameState.PLAYING)) {
             if (marking) {
                 field.markTile(row, column);
             } else {
                 field.openTile(row, column);
             }
         }
+
+
         prepareModel(model);
-        if (field.getState().equals(GameState.SOLVED) && (! isAddScore) ) {
+        if (field.getState().equals(GameState.SOLVED) && (! isAddScore) && userController.isLogged()) {
             scoreServiceJPA.addScore(new Score("MinesSweeper", "Anonym", field.getScore(), new Date()));
             isAddScore=true;
         }

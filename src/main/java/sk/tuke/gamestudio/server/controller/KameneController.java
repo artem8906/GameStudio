@@ -28,8 +28,9 @@ public class KameneController {
 
 
     @RequestMapping("/new")
-    public String newGame() {
+    public String newGame(Model model) {
         field = new Field(4);
+        prepareModel(model);
         return "kamene";
     }
 
@@ -48,37 +49,42 @@ public class KameneController {
     }
 
 
-    public String getFieldAsHtml() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table>\n");
+//    public String getFieldAsHtml() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("<table>\n");
+//
+//        for (int row = 0; row < 4; row++) {
+//            sb.append("<table class='minefield'>\n");
+//
+//            for (int col = 0; col < 4; col++) {
+//                Tile tile = field.getTile(row, col);
+////                sb.append("<td class='" + getTileClass(tile) + "'> ");
+//                    sb.append("<a href='/kamene/?row=" + row + "&column=" + col + "'> ");
+//                    sb.append("<span>" + tile.getValue() + "</span>");
+//                    sb.append(" </a>\n");
+//                    sb.append(" </td>\n");
+//                }
+//                sb.append("</tr>\n");
+//            }
+//            sb.append("</table>");
+//
+//
+//        return sb.toString();
+//    }
 
-        for (int row = 0; row < 4; row++) {
-            sb.append("<table class='minefield'>\n");
-
-            for (int col = 0; col < 4; col++) {
-                Tile tile = field.getTile(row, col);
-//                sb.append("<td class='" + getTileClass(tile) + "'> ");
-                    sb.append("<a href='/kamene/?row=" + row + "&column=" + col + "'> ");
-                    sb.append("<span>" + tile.getValue() + "</span>");
-                    sb.append(" </a>\n");
-                    sb.append(" </td>\n");
-                }
-                sb.append("</tr>\n");
-            }
-            sb.append("</table>");
-
-
-        return sb.toString();
+    public String getTileText(Tile tile) {
+        if (tile.getValue()==0) return "";
+        else
+        return String.valueOf(tile.getValue());
     }
 
 
 
     public void prepareModel(Model model) {
 //        model.addAttribute("gameState", field.getState());
-//        model.addAttribute("minesweeperField", field.getTiles());
-        model.addAttribute("bestScores", scoreServiceJPA.getBestScores("Kamene"));
-        model.addAttribute("currentScore", field.getScore());
+        model.addAttribute("kameneField", field.getTiles());
+//        model.addAttribute("bestScores", scoreServiceJPA.getBestScores("Kamene"));
+//        model.addAttribute("currentScore", field.getScore());
     }
-
 
 }
