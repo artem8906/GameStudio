@@ -54,7 +54,7 @@ public class ConsoleUIKamene {
         do {
             update();
             processInput();
-            field.savefield();
+//            field.savefield();
 
             if (field.isSolved()) {
                 int timeOfPlay = (int) (System.currentTimeMillis() - field.getStartTime())/1000000;

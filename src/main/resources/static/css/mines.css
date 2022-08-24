@@ -104,6 +104,41 @@ a.abutton:hover {
     font-weight: normal;
 }
 
+a.rightbutton {
+    border: 1px solid darkslategrey;
+    display: inline-block;
+    width: 8em;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.2em;
+    background-color: white;
+    font-weight: normal;
+}
+
+a.rightbutton:hover {
+    background-color: springgreen;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+a.leftbutton {
+    border: 1px solid darkslategrey;
+    display: inline-block;
+    width: 8em;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.2em;
+    background-color: white;
+
+    font-weight: normal;
+}
+
+a.lefttbutton:hover {
+    background-color: springgreen;
+    text-decoration: none;
+    font-weight: normal;
+}
+
 table.minefield td {
     text-align: center;
     background-color: lightgray;

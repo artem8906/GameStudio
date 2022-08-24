@@ -88,13 +88,39 @@ public class KameneController {
     }
 
 
-
     public String getTileText(Tile tile) {
         if (tile.getValue()==0) return "";
         else
         return String.valueOf(tile.getValue());
     }
 
+    @RequestMapping("/up")
+    public String moveUp(Model model){
+        prepareModel(model);
+        field.move("UP");
+        return "kamene";
+    }
+
+    @RequestMapping("/down")
+    public String moveDown(Model model){
+        prepareModel(model);
+        field.move("DOWN");
+        return "kamene";
+    }
+
+    @RequestMapping("/right")
+    public String moveRight(Model model){
+        field.move("RIGHT");
+        prepareModel(model);
+        return "kamene";
+    }
+
+    @RequestMapping("/left")
+    public String moveLeft(Model model){
+        prepareModel(model);
+        field.move("LEFT");
+        return "kamene";
+    }
 
 
     public void prepareModel(Model model) {

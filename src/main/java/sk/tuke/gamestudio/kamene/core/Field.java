@@ -166,14 +166,14 @@ public class Field implements Serializable {
 
     }
 
-    public void savefield() {
-        try (OutputStream is = new FileOutputStream("savings.txt");
-             ObjectOutputStream ois = new ObjectOutputStream(is)) {
-            ois.writeObject(this);
-        } catch (IOException e) {
-            e.getMessage();
-        }
-    }
+//    public void savefield() {
+//        try (OutputStream is = new FileOutputStream("savings.txt");
+//             ObjectOutputStream ois = new ObjectOutputStream(is)) {
+//            ois.writeObject(this);
+//        } catch (IOException e) {
+//            e.getMessage();
+//        }
+//    }
 }
 
 
