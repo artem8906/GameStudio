@@ -57,6 +57,13 @@
     </table>
 </div>
 
+    <div th:if="${@userController.logged}">
+        <form action="/comment" method="post">
+            <label for="comment">Comment:</label> <input id="comment" type="text" name = "comment" required/><br/>
+            <label for="rating">Rate:</label> <input id="rating" type="number" min="1" max="5" step="1" name = "rating" required/><br/>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
 <div>
     <table class="scores">
@@ -73,6 +80,26 @@
         </tr>
     </table>
 </div>
+
+    <div>
+        <table class="scores">
+            <caption>Comments</caption>
+            <th>Player</th>
+            <th>Comment</th>
+            <th>Date</th>
+
+            <tr th:each="comment: ${comments}">
+                <td th:text="${comment.getUsername()}">
+                <td th:text="${comment.getComment()}">
+                <td th:text="${comment.getCommented_on()}">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+Average rating is <span th:text="${avgRating}"></span>
+    </div>
 
 </main>
 

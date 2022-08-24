@@ -17,6 +17,7 @@
         <button type="submit">Log in</button>
         </form>
 
+
     <div th:if="${@userController.logged}">
         Log in as: <span th:text="${@userController.loggedUser}"/>
         <a href="/logout">Log out</a>

@@ -13,8 +13,7 @@ import sk.tuke.gamestudio.minesweeper.core.Clue;
 import sk.tuke.gamestudio.minesweeper.core.Field;
 import sk.tuke.gamestudio.minesweeper.core.GameState;
 import sk.tuke.gamestudio.minesweeper.core.Tile;
-import sk.tuke.gamestudio.service.GameStudioException;
-import sk.tuke.gamestudio.service.ScoreServiceJPA;
+import sk.tuke.gamestudio.service.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,7 +29,13 @@ public class MinesweeperController {
     UserController userController;
 
     @Autowired
-    ScoreServiceJPA scoreServiceJPA;
+    ScoreService scoreServiceJPA;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    RatingService ratingService;
 
     private Field field = new Field(9, 9, 10);
 
@@ -137,6 +142,9 @@ public class MinesweeperController {
         model.addAttribute("minesweeperField", field.getTiles());
         model.addAttribute("bestScores", scoreServiceJPA.getBestScores("MinesSweeper"));
         model.addAttribute("currentScore", field.getScore());
+        model.addAttribute("comments", commentService.getComments("MinesSweeper"));
+        model.addAttribute("avgRating", ratingService.getAverageRating("MinesSweeper"));
+
 
     }
 

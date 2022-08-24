@@ -33,4 +33,6 @@ public class UserController {
     public boolean isLogged() {
         return loggedUser != null;
     }
+
+
 }
