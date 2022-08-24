@@ -12,6 +12,7 @@ import sk.tuke.gamestudio.kamene.core.Field;
 import sk.tuke.gamestudio.kamene.core.GameState;
 import sk.tuke.gamestudio.kamene.core.Tile;
 import sk.tuke.gamestudio.service.GameStudioException;
+import sk.tuke.gamestudio.service.ScoreService;
 import sk.tuke.gamestudio.service.ScoreServiceJPA;
 import java.util.Date;
 
@@ -20,7 +21,7 @@ import java.util.Date;
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class KameneController {
     @Autowired
-    ScoreServiceJPA scoreServiceJPA;
+    ScoreService scoreService;
 
     private Field field = new Field(4);
 
@@ -42,7 +43,7 @@ public class KameneController {
         }
         prepareModel(model);
         if (field.getGameState().equals(GameState.SOLVED) && (! isAddScore) ) {
-            scoreServiceJPA.addScore(new Score("Kamene", "Anonym", field.getScore(), new Date()));
+            scoreService.addScore(new Score("Kamene", "Anonym", field.getScore(), new Date()));
             isAddScore=true;
         }
         return "kamene";

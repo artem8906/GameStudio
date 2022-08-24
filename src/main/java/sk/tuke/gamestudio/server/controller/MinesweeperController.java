@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.minesweeper.core.Clue;
 import sk.tuke.gamestudio.minesweeper.core.Field;
@@ -25,11 +27,13 @@ import java.util.List;
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class MinesweeperController {
 
+    private final String NAME_GAME = "MinesSweeper";
+
     @Autowired
     UserController userController;
 
     @Autowired
-    ScoreService scoreServiceJPA;
+    ScoreService scoreService;
 
     @Autowired
     CommentService commentService;
@@ -67,7 +71,7 @@ public class MinesweeperController {
 
         prepareModel(model);
         if (field.getState().equals(GameState.SOLVED) && (! isAddScore) && userController.isLogged()) {
-            scoreServiceJPA.addScore(new Score("MinesSweeper", "Anonym", field.getScore(), new Date()));
+            scoreService.addScore(new Score(NAME_GAME, "Anonym", field.getScore(), new Date()));
             isAddScore=true;
         }
         return "minesweeper";
@@ -79,8 +83,36 @@ public class MinesweeperController {
         return "minesweeper";
     }
 
+    @RequestMapping("/comment")
+    public String comment(String comment, Model model) {
+        if(userController.isLogged()) {
+            Comment newComment = new Comment(NAME_GAME,userController.getLoggedUser(),comment,new Date());
+            commentService.addComment(newComment);
+        } else {
+            Comment newComment = new Comment(NAME_GAME,"Anonym",comment,new Date());
+            commentService.addComment(newComment);
+        }
+        prepareModel(model);
+        return "minesweeper";
+    }
 
-    public String getFieldAsHtml() {
+    @RequestMapping("/rating")
+    public String rating(int rating, Model model) {
+        Rating newRating;
+        if (userController.isLogged()) {
+            newRating = new Rating(NAME_GAME, userController.getLoggedUser(), rating, new Date());
+            ratingService.setRating(newRating);
+        } else {
+            newRating = new Rating(NAME_GAME, "Anonym", rating, new Date());
+            ratingService.setRating(newRating);
+        }
+        prepareModel(model);
+        return "minesweeper";
+    }
+
+
+
+        public String getFieldAsHtml() {
         int rowCount = field.getRowCount();
         int columnCount = field.getColumnCount();
         StringBuilder sb = new StringBuilder();
@@ -140,10 +172,10 @@ public class MinesweeperController {
 
         model.addAttribute("gameState", field.getState());
         model.addAttribute("minesweeperField", field.getTiles());
-        model.addAttribute("bestScores", scoreServiceJPA.getBestScores("MinesSweeper"));
+        model.addAttribute("bestScores", scoreService.getBestScores(NAME_GAME));
         model.addAttribute("currentScore", field.getScore());
-        model.addAttribute("comments", commentService.getComments("MinesSweeper"));
-        model.addAttribute("avgRating", ratingService.getAverageRating("MinesSweeper"));
+        model.addAttribute("comments", commentService.getComments(NAME_GAME));
+        model.addAttribute("avgRating", ratingService.getAverageRating(NAME_GAME));
 
 
     }
