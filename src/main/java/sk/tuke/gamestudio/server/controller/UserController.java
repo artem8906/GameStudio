@@ -21,10 +21,20 @@ public class UserController {
         return "redirect:/gamestudio";}
     }
 
+    @RequestMapping("/login_k")
+    public String loginToKamene(String login, String password) {
+        if (password.equals("password")) {
+            loggedUser=login;
+            return "redirect:/kamene";
+        }
+        else {
+            return "redirect:/gamestudio";}
+    }
+
     @RequestMapping("/logout")
     public String logout() {
             loggedUser=null;
-            return "redirect:/minesweeper";
+            return "redirect:/gamestudio";//minesweeper
     }
 
     public String getLoggedUser() {

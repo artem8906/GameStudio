@@ -12,6 +12,7 @@
 
 <main layout:fragment="content">
     <form action="/login" method="post">
+        Log in for game MineSweeper<br/>
         <label for="login">Name:</label> <input id="login" type="text" name = "login" required/><br/>
         <label for="password">Password:</label> <input id="password" type="password" name = "password" required/>
         <button type="submit">Log in</button>
@@ -27,9 +28,30 @@
         Do not log in. Please
         <a href="/gamestudio">log in</a>.
     </div>
+    <br/>
+    Log in for game Kamene<br/>
+        <form action="/login_k" method="post">
+            <label for="login_k">Name:</label> <input id="login_k" type="text" name = "login" required/><br/>
+            <label for="password_k">Password:</label> <input id="password_k" type="password" name = "password" required/>
+            <button type="submit">Log in</button>
+        </form>
+
+
+        <div th:if="${@userController.logged}">
+            Log in as: <span th:text="${@userController.loggedUser}"/>
+            <a href="/logout">Log out</a>
+        </div>
+
+        <div th:if="not ${@userController.logged}">
+            Do not log in. Please
+            <a href="/gamestudio">log in</a>.
+        </div>
+        </header>
+
     </header>
 
     <h2>Games</h2>
+    Play without registration. Click the link below
     <ul>
         <li><a href="/minesweeper">Minesweeper</a></li>
         <li><a href="/kamene">Kamene</a></li>

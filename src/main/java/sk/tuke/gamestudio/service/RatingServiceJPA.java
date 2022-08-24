@@ -36,6 +36,9 @@ public class RatingServiceJPA implements RatingService{
     public int getAverageRating(String game) {
         Number number = (Number) entityManager.createQuery("select avg (rate) from Rating rt where rt.game = :myGame")
                 .setParameter("myGame", game).getSingleResult();
+        if (number==null) {
+            return 0;
+        }
         return number.intValue();
     }
 

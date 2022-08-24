@@ -7,21 +7,32 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.kamene.core.Field;
 import sk.tuke.gamestudio.kamene.core.GameState;
 import sk.tuke.gamestudio.kamene.core.Tile;
-import sk.tuke.gamestudio.service.GameStudioException;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJPA;
+import sk.tuke.gamestudio.service.*;
+
 import java.util.Date;
 
 @Controller
 @RequestMapping("/kamene")
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class KameneController {
+
+    private final String NAME_GAME = "Kamene";
+    @Autowired
+    UserController userController;
     @Autowired
     ScoreService scoreService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    RatingService ratingService;
 
     private Field field = new Field(4);
 
@@ -49,29 +60,34 @@ public class KameneController {
         return "kamene";
     }
 
+    @RequestMapping("/comment")
+    public String comment(String comment, Model model) {
+        if(userController.isLogged()) {
+            Comment newComment = new Comment(NAME_GAME,userController.getLoggedUser(),comment,new Date());
+            commentService.addComment(newComment);
+        } else {
+            Comment newComment = new Comment(NAME_GAME,"Anonym",comment,new Date());
+            commentService.addComment(newComment);
+        }
+        prepareModel(model);
+        return "kamene";
+    }
 
-//    public String getFieldAsHtml() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("<table>\n");
-//
-//        for (int row = 0; row < 4; row++) {
-//            sb.append("<table class='minefield'>\n");
-//
-//            for (int col = 0; col < 4; col++) {
-//                Tile tile = field.getTile(row, col);
-////                sb.append("<td class='" + getTileClass(tile) + "'> ");
-//                    sb.append("<a href='/kamene/?row=" + row + "&column=" + col + "'> ");
-//                    sb.append("<span>" + tile.getValue() + "</span>");
-//                    sb.append(" </a>\n");
-//                    sb.append(" </td>\n");
-//                }
-//                sb.append("</tr>\n");
-//            }
-//            sb.append("</table>");
-//
-//
-//        return sb.toString();
-//    }
+    @RequestMapping("/rating")
+    public String rating(int rating, Model model) {
+        Rating newRating;
+        if (userController.isLogged()) {
+            newRating = new Rating(NAME_GAME, userController.getLoggedUser(), rating, new Date());
+            ratingService.setRating(newRating);
+        } else {
+            newRating = new Rating(NAME_GAME, "Anonym", rating, new Date());
+            ratingService.setRating(newRating);
+        }
+        prepareModel(model);
+        return "kamene";
+    }
+
+
 
     public String getTileText(Tile tile) {
         if (tile.getValue()==0) return "";
@@ -82,10 +98,12 @@ public class KameneController {
 
 
     public void prepareModel(Model model) {
-//        model.addAttribute("gameState", field.getState());
         model.addAttribute("kameneField", field.getTiles());
-//        model.addAttribute("bestScores", scoreServiceJPA.getBestScores("Kamene"));
-//        model.addAttribute("currentScore", field.getScore());
+        model.addAttribute("comments", commentService.getComments(NAME_GAME));
+        model.addAttribute("avgRating", ratingService.getAverageRating(NAME_GAME));
+        model.addAttribute("bestScores", scoreService.getBestScores(NAME_GAME));
+
+
     }
 
 }
