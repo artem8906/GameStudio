@@ -58,6 +58,8 @@ public class MinesweeperController {
     }
 
 
+
+
     @RequestMapping
     public String minesweeper(@RequestParam(required = false) Integer row, @RequestParam(required = false) Integer column, Model model) {
         if (row != null && column != null && field.getState().equals(GameState.PLAYING)) {
